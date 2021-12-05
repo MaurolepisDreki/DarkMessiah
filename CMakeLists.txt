@@ -3,8 +3,16 @@ cmake_minimum_required( VERSION 3.22 )
 project( DarkMessiah
 	VERSION 2021.339
 	DESCRIPTION "Full-Service Web Site featuring Privacy, Security, and Liberty"
+	LANGUAGES C
 )
 
+# Installation Directory Configurations (CGI)
+set( WEBROOT "/srv/" CACHE PATH "Web Application Super-Directory" )
+set( DM_INSTALL_DIR "${WEBROOT}/${CMAKE_PROJECT_NAME}/" )
+set( DM_INSTALL_BIN "${DM_INSTALL_DIR}bin/" )
+set( DM_INSTALL_LIB "${DM_INSTALL_DIR}lib/" )
+
+find_package( UnixCommands REQUIRED )
 find_package( PkgConfig )
 
 add_subdirectory( src build )
