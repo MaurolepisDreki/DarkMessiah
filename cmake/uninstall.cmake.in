@@ -1,0 +1,40 @@
+# CMake Uninstall Routine
+
+## Generic Unistall
+if( NOT EXISTS "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt" )
+	message( FATAL_ERROR "Cannot find install manifest: \"@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt\"" )
+endif( NOT EXISTS "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt" )
+
+file( READ "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt" files )
+string( REGEX REPLACE "\n" ";" files "${files}" )
+foreach( file ${files} )
+	message( STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"" )
+	if( EXISTS "$ENV{DESTDIR}${file}" )
+		execute_process(
+			COMMAND "@RM@" --interactive=never "$ENV{DESTDIR}${file}"
+			RESULT_VARIABLE rm_retval
+		)
+
+		if( NOT "${rm_retval}" STREQUAL 0 )
+			message( FATAL_ERROR "Problem removing \"$ENV{DESTDIR}${file}\"" )
+		endif( NOT "${rm_retval}" STREQUAL 0 )
+	else( EXISTS "$ENV{DESTDIR}${file}" )
+		message( STATUS "File \"$ENV{DESTDIR}${file}\" does not exist." )
+	endif( EXISTS "$ENV{DESTDIR}${file}" )
+endforeach( file )
+
+## Specific Uninstall (to this project)
+message( STATUS "Pruning Directory \"$ENV{DESTDIR}@CMAKE_INSTALL_FULL_INCLUDEDIR@/@MY_SUBINCLUDEDIR@\"" )
+if( EXISTS "$ENV{DESTDIR}@CMAKE_INSTALL_FULL_INCLUDEDIR@/@MY_SUBINCLUDEDIR@" )
+	execute_process(
+		COMMAND "@RM@" --interactive=never --dir "$ENV{DESTDIR}@CMAKE_INSTALL_FULL_INCLUDEDIR@/@MY_SUBINCLUDEDIR@"
+		RESULT_VARIABLE rm_retval
+	)
+
+	if( NOT "${rm_retval}" STREQUAL 0 )
+		message( FATAL_ERROR "Problem removing \"$ENV{DESTDIR}@CMAKE_INSTALL_FULL_INCLUDEDIR@/@MY_SUBINCLUDEDIR@\"" )
+	endif( NOT "${rm_retval}" STREQUAL 0 )
+else( EXISTS "$ENV{DESTDIR}@CMAKE_INSTALL_FULL_INCLUDEDIR@/@MY_SUBINCLUDEDIR@" )
+	message( STATUS "Directory $ENV{DESTDIR}@CMAKE_INSTALL_FULL_INCLUDEDIR@/@MY_SUBINCLUDEDIR@\" does not exist." )
+endif( EXISTS "$ENV{DESTDIR}@CMAKE_INSTALL_FULL_INCLUDEDIR@/@MY_SUBINCLUDEDIR@" )
+
