@@ -1,12 +1,12 @@
 pkg_check_modules( FCGI REQUIRED fcgi )
 
-add_executable( dmcgi 
+add_executable( dm.fcgi 
 	main.c
 )
-target_link_libraries( dmcgi
+target_link_libraries( dm.fcgi
 	${FCGI_LIBRARIES}
 )
-install( TARGETS dmcgi
+install( TARGETS dm.fcgi
 	DESTINATION "${DM_INSTALL_BIN}"
 )
 
