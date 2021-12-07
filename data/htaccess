@@ -1,0 +1,12 @@
+# vim: syntax=apache
+<IfModule !fcgid_module>
+	Error "mod_fcgid is required for this application."
+</IfModule>
+
+<IfModule !rewrite_module>
+	Error "mod_rewrite is required for this application."
+</IfModule>
+
+RewriteEngine on
+RewriteRule "^(.*)" "/bin/dm.fcgi/$1" [END]
+

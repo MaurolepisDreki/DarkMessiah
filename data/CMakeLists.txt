@@ -1,0 +1,7 @@
+install( FILES htaccess
+	DESTINATION "${DM_INSTALL_DIR}"
+	PERMISSIONS OWNER_READ OWNER_WRITE
+	            GROUP_READ
+	            WORLD_READ
+	RENAME .htaccess )
+

@@ -16,6 +16,7 @@ find_package( UnixCommands REQUIRED )
 find_package( PkgConfig )
 
 add_subdirectory( src build )
+add_subdirectory( data build/data )
 
 # Add Uninstall Target
 configure_file(

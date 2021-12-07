@@ -16,9 +16,12 @@ void main( void ) {
 				"<body>"
 					"<h1>FastCGI Demo</h1>"
 					"<p>Request number %d running on host <i>%s</i></p>"
+					"<p>%s</p>"
+					"<p><i>%s</i></p>"
+					"<p><b>%s</b></p>"
 				"</body>"
 			"</html>\n",
-			++count, getenv( "SERVER_NAME" ) 
+			++count, getenv( "SERVER_NAME" ), getenv( "SCRIPT_NAME" ), getenv( "PATH_INFO" ), getenv( "QUERY_STRING" )
 		);
 }
 
