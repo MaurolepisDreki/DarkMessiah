@@ -1,0 +1,9 @@
+// vim: syntax=c
+#ifndef INCLUDED_REWRITE_DEF
+#  define INCLUDED_REWRITE_DEF
+#  define _( obj ) _ ## obj
+#  define __( obj ) __ ## obj
+#  define LibAutoma( obj ) LibAutoma_ ## obj
+#  define _LibAutoma( obj ) _LibAutoma_ ## obj
+#endif
+
