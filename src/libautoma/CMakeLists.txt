@@ -1,8 +1,9 @@
 add_library( automa SHARED
 	engine.c
+#	state.c
 )
 
-install( automa 
+install( TARGETS automa 
 	DESTINATION "${DM_INSTALL_LIB}"
 )
 

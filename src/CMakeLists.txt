@@ -1,3 +1,5 @@
+add_subdirectory( libautoma )
+
 pkg_check_modules( FCGI REQUIRED fcgi )
 
 add_executable( dm.fcgi 

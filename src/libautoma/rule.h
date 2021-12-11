@@ -9,7 +9,7 @@
 typedef bool (*LibAutoma( Rule ))( 
 	const LibAutoma( Engine ) * /* Invoking Engine */, 
 	const LibAutoma( State ) * /* Current State */);
-typedef void (*LibAutoma( OnRule )( 
+typedef void (*LibAutoma( OnRule ))( 
 	const LibAutoma( Engine ) * /* Invoking Engine */, 
 	const LibAutoma( State ) * /* Current State */);
 

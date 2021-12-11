@@ -1,7 +1,7 @@
 cmake_minimum_required( VERSION 3.22 )
 
 project( DarkMessiah
-	VERSION 2021.339
+	VERSION 2021.344
 	DESCRIPTION "Full-Service Web Site featuring Privacy, Security, and Liberty"
 	LANGUAGES C
 )
@@ -14,6 +14,8 @@ set( DM_INSTALL_LIB "${DM_INSTALL_DIR}lib/" )
 
 find_package( UnixCommands REQUIRED )
 find_package( PkgConfig )
+
+add_compile_options( -fdiagnostics-color=always )
 
 add_subdirectory( src build )
 add_subdirectory( data build/data )

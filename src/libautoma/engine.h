@@ -31,15 +31,15 @@ typedef struct _( LibAutoma( RuleNode ) ) {
 	struct _( LibAutoma( RuleNode ) ) *Next;
 } LibAutoma( RuleNode );
 
-struct _( LibAutoma( SourceNode ) ) {
+typedef struct _( LibAutoma( SourceNode ) ) {
 	char Type;
 	union {
-		struct { char *orig, char *pos } cstr;
+		struct { char *orig; char *pos; size_t len; } cstr;
 		FILE *file;
-	}
+	} Source;
 } LibAutoma( SourceNode );
 
-struct _( LibAutoma( Engine ) ) {
+typedef struct _( LibAutoma( Engine ) ) {
 	LibAutoma( StateNode ) *ActiveState;
 	LibAutoma( StateNode ) *FinalState;
 	LibAutoma( RuleNode ) *RuleChain;
@@ -103,18 +103,20 @@ void LibAutoma( RuleNode )( Destroy )(
 LibAutoma( RuleNode ) *LibAutoma( RuleNode )( Copy )(
 	LibAutoma( RuleNode ) * /* Target RuleNode */);
 
-/* NOTE: Cpoies entire chain */
+/* NOTE: Copies entire chain */
 LibAutoma( RuleNode ) *LibAutoma( RuleNode )( CopyChain )(
 	LibAutoma( RuleNode ) * /* First RuleNode */);
 
-void LibAutoma( RuleNode )( Exec )( 
-	const LibAutoma( Engine ) * /* Calling Engine */,
+bool LibAutoma( RuleNode )( Exec )( 
+	LibAutoma( RuleNode ) * /* Rule Being Invoked */,
+	LibAutoma( Engine ) * /* Calling Engine */,
 	const LibAutoma( State ) * /* Current State */);
 
 
 bool LibAutoma( SourceNode )( PushString )(
 	LibAutoma( SourceNode ) ** /* Source Stack */,
-	const char * /* C-string */); /*< Returns True on Success */
+	const char * /* Byte Array */,
+	const size_t /* Array Length */); /*< Returns True on Success */
 
 bool LibAutoma( SourceNode )( PushFile )(
 	LibAutoma( SourceNode ) ** /* Source Stack */,
@@ -123,13 +125,16 @@ bool LibAutoma( SourceNode )( PushFile )(
 void LibAutoma( SourceNode )( PopNode )(
 	LibAutoma( SourceNode ) ** /* Source Stack */);
 
-char LibAutoma( SourceNode )( GetChar )(
-	LibAutoma( SourceNode ) ** /* Soruce Stack */);
+bool LibAutoma( SourceNode )( IsGood )(
+	LibAutoma( SourceNode ) ** /* Source Stack */);
+
+unsigned char LibAutoma( SourceNode )( GetChar )(
+	LibAutoma( SourceNode ) ** /* Source Stack */);
 
 
 void LibAutoma( Engine )( Init )( LibAutoma( Engine ) * /* Target Engine */ );
 void LibAutoma( Engine )( ReInit )( LibAutoma( Engine ) * /* Target Engine */ );
-void LibAutmoa( Engine )( AddActiveState )( 
+void LibAutoma( Engine )( AddActiveState )( 
 	LibAutoma( Engine ) * /* Target Engine */, 
 	LibAutoma( State )  * /* Target State */);
 void LibAutoma( Engine )( ClearActiveStates )( LibAutoma( Engine ) * /* Target Engine */ );
@@ -137,9 +142,6 @@ void LibAutoma( Engine )( AddRule )( LibAutoma( Engine ) * /* Target Engine */,
 	LibAutoma( Rule ) * /* Rule Function */,
 	LibAutoma( OnRule ) * /* Action Routine */);
 void LibAutoma( Engine )( ClearRules )( LibAutoma( Engine ) * /* Target Engine */ );
-void LibAutoma( Engine )( SetDefaultAction )( 
-	LibAutoma( Engine ) * /* Target Engine */,
-	LibAutoma( OnRule ) * /* Action Routine */);
 
 void LibAutoma( Engine )( AddFinalState )(
 	LibAutoma( Engine ) * /* Target Engine */,
@@ -151,15 +153,15 @@ long LibAutoma( Engine )( PopFinalState )(
 long LibAutoma( Engine )( DelFinalState )(
 	LibAutoma( Engine ) * /* Target Enigne */,
 	const LibAutoma( State ) * /* Target State */); 
-/*^ Delets all instances of Target State in Engine->FinalState list; 
+/*^^ Delets all instances of Target State in Engine->FinalState list; 
  *    Returns the number of final states remaining */
 void LibAutoma( Engine )( ClearFinalStates )(
-	LibAutoma( Engine ) * /* Target Engine */
+	LibAutoma( Engine ) * /* Target Engine */);
 
-void LibAutoma( Engine )( ReadString )( LibAutoma( Engine ) * /* Target Engine */ );
-void LibAutoma( Engine )( ReadFile )( LibAutoma( Engine ) * /* Target Engine */ );
+bool LibAutoma( Engine )( ReadString )( LibAutoma( Engine ) * /* Target Engine */, const char * /* Byte Array */, const size_t /* Array Length */);
+bool LibAutoma( Engine )( ReadFile )( LibAutoma( Engine ) * /* Target Engine */, const char * /* File Path */ );
 bool LibAutoma( Engine )( NextChar )( LibAutoma( Engine ) * /* Target Engine */ ); /*< Returns True on success */
-void LibAutoma( Enigne )( Exec )( LibAutoma( Engine ) * /* Target Engine */ );
+void LibAutoma( Engine )( Exec )( LibAutoma( Engine ) * /* Target Engine */ );
 /*^ Execution Continues as long as there is data to read and active states available */
 void LibAutoma( Engine )( Stop )( LibAutoma( Engine ) * /* Target Engine */ ); /* Stop Engine durring Exec */
 

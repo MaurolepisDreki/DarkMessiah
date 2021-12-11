@@ -33,7 +33,7 @@ LibAutoma( State ) *LibAutoma( State )( Create )(
 	unsigned int /* new state */, 
 	const LibAutoma( State ) * /* previous state */, 
 	void * /* new data */,
-	void (* /* data cleaner */)(void * /* data */ );
+	void (* /* data cleaner */)(void * /* data */ ));
 
 void _( LibAutoma( State )( Destroy ) )(
 	LibAutoma( State ) ** /* target state */ );
