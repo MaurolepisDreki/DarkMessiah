@@ -1,5 +1,6 @@
 add_library( automa SHARED
 	engine.c
+	sourcenode.c
 #	state.c
 )
 

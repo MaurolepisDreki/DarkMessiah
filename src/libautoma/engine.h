@@ -37,6 +37,7 @@ typedef struct _( LibAutoma( SourceNode ) ) {
 		struct { char *orig; char *pos; size_t len; } cstr;
 		FILE *file;
 	} Source;
+	struct _( LibAutoma( SourceNode ) ) *Next;
 } LibAutoma( SourceNode );
 
 typedef struct _( LibAutoma( Engine ) ) {
