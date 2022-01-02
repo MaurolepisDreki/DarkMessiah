@@ -31,6 +31,7 @@ void _JournalUnitTests_ELF64_SingleShift_FirstShift() {
 	#endif
 }	
 
+__attribute__((constructor (102)))
 void _JournalUnitTests_RegisterSuite_ELF64() {
 	CU_pSuite suite;
 	CU_pTest test;

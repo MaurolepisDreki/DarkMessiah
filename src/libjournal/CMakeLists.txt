@@ -86,41 +86,24 @@ target_compile_features( journal PRIVATE
 )
 
 if( BCUNIT_FOUND )
-	add_library( JournalUnitTestCollection STATIC
+	add_executable( JournalUnitTests
+		bcunit/main.c
 		bcunit/ELF64.c
 	)
 
-	target_compile_options( JournalUnitTestCollection
+	target_compile_options( JournalUnitTests
 		PRIVATE "SHELL:-iquote ${CMAKE_CURRENT_SOURCE_DIR}"
 	)
 
-	target_link_libraries( JournalUnitTestCollection
+	target_link_libraries( JournalUnitTests
 		journal
 		${BCUNIT_LIBRARIES}
 	)
 
-	add_executable( JournalUnitTests
-		bcunit/basic.c
-		bcunit/main.c
+	add_custom_target( UnitTest_Journal
+		COMMAND JournalUnitTests
 	)
 
-	target_link_libraries( JournalUnitTests
-		${BCUNIT_LIBRARIES}
-		JournalUnitTestCollection
-	)
-
-	add_executable( ROBOT_JournalUnitTests
-		bcunit/automate.c
-		bcunit/main.c
-	)
-
-	target_link_libraries( ROBOT_JournalUnitTests
-		${BCUNIT_LIBRARIES}
-		JournalUnitTestCollection
-	)
-
-	add_test( NAME JournalUnitTests
-		COMMAND ROBOT_JournalUnitTests )
 else( BCUNIT_FOUND )
 	message( WARNING "Journal: Unit Tests Disabled: BCUnit REQUIRED" )
 endif( BCUNIT_FOUND )

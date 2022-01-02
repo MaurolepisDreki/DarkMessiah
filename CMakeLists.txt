@@ -12,7 +12,6 @@ set( DM_INSTALL_DIR "${WEBROOT}/${CMAKE_PROJECT_NAME}/" )
 set( DM_INSTALL_BIN "${DM_INSTALL_DIR}bin/" )
 set( DM_INSTALL_LIB "${DM_INSTALL_DIR}lib/" )
 
-include( CTest )
 include( CheckIncludeFile )
 include( CheckIncludeFiles )
 include( CheckTypeSize )
