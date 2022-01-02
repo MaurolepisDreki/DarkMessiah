@@ -1,4 +1,5 @@
 add_subdirectory( libautoma )
+add_subdirectory( libjournal )
 
 pkg_check_modules( FCGI REQUIRED fcgi )
 

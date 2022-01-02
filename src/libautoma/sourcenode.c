@@ -67,7 +67,7 @@ bool LibAutoma( SourceNode )( IsGood )( LibAutoma( SourceNode ) **stack ) {
 		fpos_t pos;
 		int buff;
 		fgetpos( (*stack)->Source.file, &pos );
-		buff = fgetc( (*stack)->Souce.file );
+		buff = fgetc( (*stack)->Source.file );
 		if( buff != EOF )
 			fsetpos( (*stack)->Source.file, &pos );
 
@@ -85,7 +85,7 @@ unsigned char LibAutoma( SourceNode )( GetChar )( LibAutoma( SourceNode ) **stac
 	if( LibAutoma( SourceNode )( IsGood )( stack ) ) {
 		/* Get next char */
 		if( (*stack)->Type == LibAutoma( SourceType )( STRING ) ) { 
-			charbuff = (*stack)->Source.cstr.pos++;		
+			charbuff = *(*stack)->Source.cstr.pos++;		
 		} else {
 			charbuff = fgetc( (*stack)->Source.file );
 		}
@@ -95,6 +95,6 @@ unsigned char LibAutoma( SourceNode )( GetChar )( LibAutoma( SourceNode ) **stac
 			LibAutoma( SourceNode )( PopNode )( stack );
 	}
 
-	return charbuf;
+	return charbuff;
 }
 
