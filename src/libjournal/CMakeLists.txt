@@ -85,3 +85,43 @@ target_compile_features( journal PRIVATE
 	c_variadic_macros
 )
 
+if( BCUNIT_FOUND )
+	add_library( JournalUnitTestCollection STATIC
+		bcunit/ELF64.c
+	)
+
+	target_compile_options( JournalUnitTestCollection
+		PRIVATE "SHELL:-iquote ${CMAKE_CURRENT_SOURCE_DIR}"
+	)
+
+	target_link_libraries( JournalUnitTestCollection
+		journal
+		${BCUNIT_LIBRARIES}
+	)
+
+	add_executable( JournalUnitTests
+		bcunit/basic.c
+		bcunit/main.c
+	)
+
+	target_link_libraries( JournalUnitTests
+		${BCUNIT_LIBRARIES}
+		JournalUnitTestCollection
+	)
+
+	add_executable( ROBOT_JournalUnitTests
+		bcunit/automate.c
+		bcunit/main.c
+	)
+
+	target_link_libraries( ROBOT_JournalUnitTests
+		${BCUNIT_LIBRARIES}
+		JournalUnitTestCollection
+	)
+
+	add_test( NAME JournalUnitTests
+		COMMAND ROBOT_JournalUnitTests )
+else( BCUNIT_FOUND )
+	message( WARNING "Journal: Unit Tests Disabled: BCUnit REQUIRED" )
+endif( BCUNIT_FOUND )
+

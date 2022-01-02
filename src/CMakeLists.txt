@@ -1,7 +1,8 @@
+pkg_check_modules( FCGI REQUIRED fcgi )
+pkg_check_modules( BCUNIT bcunit ) #< Required for testing
+
 add_subdirectory( libautoma )
 add_subdirectory( libjournal )
-
-pkg_check_modules( FCGI REQUIRED fcgi )
 
 add_executable( dm.fcgi 
 	main.c
