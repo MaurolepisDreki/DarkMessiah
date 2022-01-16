@@ -9,7 +9,7 @@
  *  cstr: C-String to hash
  */
 typedef uint64_t ELF64_Hash;
-ELF64_Hash _Journal_ELF64( char *str );
+ELF64_Hash _Journal_ELF64( const char *restrict str );
 
 /* Internal Logging Levels */
 typedef uint8_t Journal_Level;
